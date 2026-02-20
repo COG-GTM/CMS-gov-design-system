@@ -5,7 +5,7 @@ import { pixelNumberToEx, pixelNumberToRem } from '../lib/conversions';
 import { GetLocalVariablesResponse, LocalVariable as Variable } from '@figma/rest-api-spec';
 import { FlattenedTokens, FlattenedTokensByFile, Token } from '../lib/tokens';
 import { select } from '@inquirer/prompts';
-import { execSync } from 'child_process';
+import { execFileSync } from 'child_process';
 import path from 'path';
 
 const missingAliasesLogPath = path.join(__dirname, 'missing_aliases.txt');
@@ -412,5 +412,5 @@ export function writeTokenFiles(tokensDir: string, tokensByFile: TokensByFile) {
 
   // Format the files using prettier and its project config so we can properly preview
   // the actual changes before committing
-  execSync(`npx prettier --write '${tokensDir}/*.json'`);
+  execFileSync('npx', ['prettier', '--write', path.join(tokensDir, '*.json')]);
 }
