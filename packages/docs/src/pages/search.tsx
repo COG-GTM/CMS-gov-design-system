@@ -8,6 +8,28 @@ import SEO from '../components/layout/DocSiteSeo';
 import useTheme from '../helpers/useTheme';
 import { sendSearchInitiatedEvent } from '../helpers/analytics';
 
+/**
+ * Builds a sanitized URL from the given origin, path, and search string.
+ * Uses the URL constructor to properly encode components and validates
+ * that the resulting URL uses a safe protocol (http or https).
+ * Returns '#' for invalid or potentially unsafe URLs.
+ */
+function buildSafeResultHref(origin: string, path: string, search: string): string {
+  try {
+    const url = new URL(`/${path}`, origin);
+    const params = new URLSearchParams(search);
+    params.forEach((value, key) => {
+      url.searchParams.set(key, value);
+    });
+    if (url.protocol !== 'http:' && url.protocol !== 'https:') {
+      return '#';
+    }
+    return url.href;
+  } catch {
+    return '#';
+  }
+}
+
 const SearchPage = ({ location }: MdxQuery) => {
   const [query, setQuery] = useState('');
   const theme = useTheme();
@@ -84,7 +106,7 @@ const SearchPage = ({ location }: MdxQuery) => {
               return (
                 <li key={key}>
                   <a
-                    href={location.origin + '/' + result.path + location.search}
+                    href={buildSafeResultHref(location.origin, result.path, location.search)}
                     onClick={sendAnalyticsEvent}
                   >
                     {result.title}
