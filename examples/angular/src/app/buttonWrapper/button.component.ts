@@ -1,4 +1,4 @@
-import { Component, CUSTOM_ELEMENTS_SCHEMA, EventEmitter, input, Output } from '@angular/core';
+import { Component, CUSTOM_ELEMENTS_SCHEMA, input, output } from '@angular/core';
 
 @Component({
   selector: 'app-button',
@@ -9,7 +9,7 @@ import { Component, CUSTOM_ELEMENTS_SCHEMA, EventEmitter, input, Output } from '
 export class ButtonComponent {
   buttonVariation = input<string>('solid');
   additionalClasses = input<string>('');
-  @Output() buttonClickEvent = new EventEmitter<string>();
+  readonly buttonClickEvent = output<string>();
 
   handleClick() {
     this.buttonClickEvent.emit('warn');

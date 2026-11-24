@@ -1,4 +1,4 @@
-import { Component, CUSTOM_ELEMENTS_SCHEMA, EventEmitter, input, Output } from '@angular/core';
+import { Component, CUSTOM_ELEMENTS_SCHEMA, input, output } from '@angular/core';
 
 @Component({
   selector: 'app-dialog',
@@ -13,7 +13,7 @@ export class DialogComponent {
   backdrop_click_exits = input<string>();
   heading = input<string>();
 
-  @Output() isOpenChange = new EventEmitter<undefined>();
+  readonly isOpenChange = output<void>();
 
   close() {
     this.isOpenChange.emit();
