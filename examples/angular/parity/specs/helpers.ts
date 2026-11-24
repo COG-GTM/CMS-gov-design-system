@@ -17,6 +17,11 @@ export async function screenshot(page: Page, testInfo: TestInfo, name: string) {
     testInfo.project.name,
     `${name}.png`
   );
+  // Freeze CSS animations/transitions (e.g. the drawer slide-in) at their resting state so both
+  // apps are captured identically regardless of timing.
+  await page.addStyleTag({
+    content: '*, *::before, *::after { animation: none !important; transition: none !important; }',
+  });
   const options = { fullPage: true, animations: 'disabled', caret: 'hide' } as const;
   // Wait until two consecutive captures match so CSS transitions (e.g. the drawer slide-in)
   // have settled and both apps are captured in the same state.

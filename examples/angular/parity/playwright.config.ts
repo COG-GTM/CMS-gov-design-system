@@ -6,6 +6,8 @@ import { defineConfig, devices } from '@playwright/test';
  */
 export default defineConfig({
   testDir: './specs',
+  // Not *.spec.ts so the root Jest unit run (npm run test:unit) does not pick these up.
+  testMatch: '**/*.parity.ts',
   outputDir: './test-results',
   fullyParallel: true,
   retries: 0,
