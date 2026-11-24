@@ -34,25 +34,25 @@ export class AppComponent {
   unwrappedAlertHeading = 'Unwrapped Alert';
   unwrappedAlertMessage = 'This alert is not wrapped';
   unWrappedAlertVariation = 'warn';
-  wrappedAlertHeading = 'Wrapped Alert';
+  wrappedAlertHeading = signal('Wrapped Alert');
   wrappedAlertMessage = 'This alert is wrapped!';
-  wrappedAlertVariation = 'success';
+  wrappedAlertVariation = signal('success');
 
   // Button Data:
-  buttonVariation: string | null = null;
+  buttonVariation = signal<string | null>(null);
   outlineVariation = 'outline';
   ghostVariation = 'ghost';
   solidVariation = 'solid';
-  buttonWarn = false;
+  buttonWarn = signal(false);
   buttonText = signal("I'm only gonna tell you once.");
   toggleClasses = 'ds-c-drawer__toggle';
 
   setToWarning(warning: string) {
-    this.wrappedAlertVariation = warning;
-    this.wrappedAlertHeading = 'Whoa clicked';
-    this.buttonWarn = true;
+    this.wrappedAlertVariation.set(warning);
+    this.wrappedAlertHeading.set('Whoa clicked');
+    this.buttonWarn.set(true);
     this.buttonText.set("You've been warned.");
-    this.buttonVariation = this.solidVariation;
+    this.buttonVariation.set(this.solidVariation);
   }
 
   // Accordion Data:
@@ -60,15 +60,15 @@ export class AppComponent {
 
   // Accordion Item data:
   headingLevel = '2';
-  liked = true;
+  liked = signal(true);
 
   setLiked(e: Event) {
     const value = ((e as any).detail.target as HTMLInputElement).value === 'true';
-    this.liked = value;
+    this.liked.set(value);
   }
 
   alertLiked() {
-    if (this.liked) {
+    if (this.liked()) {
       alert('Glad you liked this!');
     } else {
       alert('Sorry you did not like this content.');
@@ -127,18 +127,18 @@ export class AppComponent {
   rootId = 'autocomplete-root';
 
   // Modal Dialog Data:
-  is_open = 'false';
+  is_open = signal('false');
   root_id = 'modal-dialog';
   size = 'wide';
   backdrop_click_exits = 'true';
   dialogHeading = 'This is the modal heading.';
 
   openDialog() {
-    this.is_open = 'true';
+    this.is_open.set('true');
   }
 
   closeDialog() {
-    this.is_open = 'false';
+    this.is_open.set('false');
   }
 
   // Review Data:
@@ -168,12 +168,12 @@ export class AppComponent {
   drawerHeading = 'Drawer Heading';
   footerTitle = 'Footer Title';
   footerBody = 'Footer content';
-  drawerOpen = 'false';
+  drawerOpen = signal('false');
   openDrawer() {
-    this.drawerOpen = 'true';
+    this.drawerOpen.set('true');
   }
   closeDrawer() {
-    this.drawerOpen = 'false';
+    this.drawerOpen.set('false');
   }
 
   // Third Party Link Data:
