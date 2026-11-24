@@ -23,7 +23,9 @@ async function load(file, width, height) {
 }
 
 const rows = [];
-for (const name of fs.readdirSync(path.join(screens, 'baseline')).filter((f) => f.endsWith('.png'))) {
+for (const name of fs
+  .readdirSync(path.join(screens, 'baseline'))
+  .filter((f) => f.endsWith('.png'))) {
   const a = path.join(screens, 'baseline', name);
   const b = path.join(screens, 'upgraded', name);
   if (!fs.existsSync(b)) {
@@ -36,7 +38,11 @@ for (const name of fs.readdirSync(path.join(screens, 'baseline')).filter((f) => 
   const [ra, rb] = await Promise.all([load(a, width, height), load(b, width, height)]);
   let changed = 0;
   for (let i = 0; i < ra.length; i += 4) {
-    if (Math.abs(ra[i] - rb[i]) + Math.abs(ra[i + 1] - rb[i + 1]) + Math.abs(ra[i + 2] - rb[i + 2]) > 30) changed++;
+    if (
+      Math.abs(ra[i] - rb[i]) + Math.abs(ra[i + 1] - rb[i + 1]) + Math.abs(ra[i + 2] - rb[i + 2]) >
+      30
+    )
+      changed++;
   }
   const diff = ((changed / (width * height)) * 100).toFixed(3);
   const gap = 24;
@@ -47,7 +53,11 @@ for (const name of fs.readdirSync(path.join(screens, 'baseline')).filter((f) => 
     ])
     .png()
     .toFile(path.join(out, name));
-  rows.push({ name, size: `${ma.width}x${ma.height} / ${mb.width}x${mb.height}`, diff: `${diff}%` });
+  rows.push({
+    name,
+    size: `${ma.width}x${ma.height} / ${mb.width}x${mb.height}`,
+    diff: `${diff}%`,
+  });
 }
 fs.writeFileSync(path.join(dir, 'report', 'diff.json'), JSON.stringify(rows, null, 2));
 console.log('| Screenshot | baseline / upgraded size | Pixel diff |\n| --- | --- | --- |');
