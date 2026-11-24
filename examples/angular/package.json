@@ -7,7 +7,9 @@
     "start": "ng serve",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test"
+    "test": "ng test",
+    "parity": "playwright test -c parity",
+    "parity:report": "node parity/compose.mjs"
   },
   "dependencies": {
     "@angular/animations": "^19.0.0",
