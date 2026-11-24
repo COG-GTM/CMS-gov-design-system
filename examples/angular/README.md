@@ -14,7 +14,7 @@ From within this example you should be able to see how to:
 ## Getting started
 
 1. Install packages at the root of this repository (see [root README](../../README.md))
-1. Use Node.js `^20.19.0 || ^22.12.0 || >=24.0.0` (Angular 21 does not run on the repo-wide Node 18 in `../../.nvmrc`); from this directory `nvm use` picks up `examples/angular/.nvmrc`
+1. Use Node.js `^20.19.0 || ^22.13.0 || >=24.0.0` (Angular 21 does not run on the repo-wide Node 18 in `../../.nvmrc`); from this directory `nvm use` picks up `examples/angular/.nvmrc`
 1. Start the application: `npm run start`
 
 _Note: Whenever changes have been made to the design system packages, you must **clear the local cache** for this application to receive those changes by deleting the hidden `examples/angular/.angular` directory._
