@@ -8,6 +8,7 @@ import sharp from 'sharp';
 const dir = path.dirname(fileURLToPath(import.meta.url));
 const screens = path.join(dir, 'report', 'screens');
 const out = path.join(dir, 'report', 'side-by-side');
+fs.rmSync(out, { recursive: true, force: true });
 fs.mkdirSync(out, { recursive: true });
 
 async function load(file, width, height) {
@@ -63,3 +64,4 @@ for (const name of fs
 fs.writeFileSync(path.join(dir, 'report', 'diff.json'), JSON.stringify(rows, null, 2));
 console.log('| Screenshot | baseline / upgraded size | Pixel diff |\n| --- | --- | --- |');
 for (const r of rows) console.log(`| ${r.name} | ${r.size ?? '-'} | ${r.diff} |`);
+if (rows.some((r) => r.diff === 'missing')) process.exitCode = 1;
