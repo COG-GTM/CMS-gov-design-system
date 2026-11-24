@@ -1,4 +1,4 @@
-import { Component, CUSTOM_ELEMENTS_SCHEMA, EventEmitter, input, Output } from '@angular/core';
+import { Component, CUSTOM_ELEMENTS_SCHEMA, input, output } from '@angular/core';
 
 @Component({
   selector: 'app-drawer',
@@ -8,7 +8,7 @@ import { Component, CUSTOM_ELEMENTS_SCHEMA, EventEmitter, input, Output } from '
 })
 export class DrawerComponent {
   isOpen = input<string>();
-  @Output() isOpenChange = new EventEmitter<string>();
+  readonly isOpenChange = output<void>();
   footerBody = input<string>();
   footerTitle = input<string>();
   drawerHeading = input<string>();

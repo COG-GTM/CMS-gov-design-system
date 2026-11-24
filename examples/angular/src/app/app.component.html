@@ -7,8 +7,8 @@
     <!-- Wrapped Alert -->
     <h2 class="ds-text-heading--4xl ds-u-margin-top--2">Alert</h2>
     <app-alert
-      [alertVariation]="wrappedAlertVariation"
-      [alertHeading]="wrappedAlertHeading"
+      [alertVariation]="wrappedAlertVariation()"
+      [alertHeading]="wrappedAlertHeading()"
       [alertMessage]="wrappedAlertMessage"
     >
       <app-button (buttonClickEvent)="setToWarning($event)" [buttonVariation]="solidVariation">
@@ -170,7 +170,8 @@
     <h2 class="ds-text-heading--4xl ds-u-margin-top--2">Modal Dialog</h2>
     <app-button (buttonClickEvent)="openDialog()"> Open Dialog </app-button>
     <app-dialog
-      [(isOpen)]="is_open"
+      [isOpen]="is_open()"
+      (isOpenChange)="closeDialog()"
       [root_id]="root_id"
       [size]="size"
       [backdrop_click_exits]="backdrop_click_exits"
@@ -210,7 +211,8 @@
 
     <h2 class="ds-text-heading--4xl ds-u-margin-top--2">Drawer</h2>
     <app-drawer
-      [(isOpen)]="drawerOpen"
+      [isOpen]="drawerOpen()"
+      (isOpenChange)="closeDrawer()"
       [footerBody]="footerBody"
       [footerTitle]="footerTitle"
       [drawerHeading]="drawerHeading"
