@@ -47,16 +47,15 @@ Pixel diff = share of pixels where any RGBA channel differs by more than 30 (`co
 # from the repo root
 npm ci && npm run build:tokens && npm run build:core
 
-# baseline (Angular 19) on :4000, from a worktree of the commit that added this suite on Angular 19
+# baseline (Angular 19) on :4000, from a worktree of the commit that added this suite on Angular 19 (runs in the background)
 git worktree add ../baseline 0b7392cc
 (cd ../baseline && npm ci && npm run build:tokens && npm run build:core \
-  && cd examples/angular && npx ng build && npx http-server dist/demo/browser -p 4000 -s)
+  && cd examples/angular && npx ng build && npx http-server dist/demo/browser -p 4000 -s) &
 
-# upgraded (Angular 21) production build on :4200; `nvm install` installs (if missing) and switches to examples/angular/.nvmrc (Node 22.23.4)
-cd examples/angular && nvm install && npx ng build && npx http-server dist/demo/browser -p 4200 -s
+# upgraded (Angular 21) production build on :4200 (background); `nvm install` installs (if missing) and switches to examples/angular/.nvmrc (Node 22.23.4)
+cd examples/angular && nvm install && npx ng build && (npx http-server dist/demo/browser -p 4200 -s &)
 
-# suite + side-by-side report
-cd examples/angular
+# suite + side-by-side report, still in examples/angular once both servers respond
 npx playwright install chromium
 npm run parity          # runs baseline + upgraded projects
 npm run parity:report   # writes parity/report/side-by-side/*.png and diff.json
