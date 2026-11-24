@@ -52,8 +52,8 @@ git worktree add ../baseline 0b7392cc
 (cd ../baseline && npm ci && npm run build:tokens && npm run build:core \
   && cd examples/angular && npx ng build && npx http-server dist/demo/browser -p 4000 -s)
 
-# upgraded (Angular 21) production build on :4200; `nvm use` picks examples/angular/.nvmrc (Node 22.23.4)
-cd examples/angular && nvm use && npx ng build && npx http-server dist/demo/browser -p 4200 -s
+# upgraded (Angular 21) production build on :4200; `nvm install` installs (if missing) and switches to examples/angular/.nvmrc (Node 22.23.4)
+cd examples/angular && nvm install && npx ng build && npx http-server dist/demo/browser -p 4200 -s
 
 # suite + side-by-side report
 cd examples/angular
