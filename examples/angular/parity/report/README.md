@@ -1,7 +1,7 @@
 # Angular 19 -> 21 parity report
 
 Baseline: Angular 19.1 production build of `main`, served on http://localhost:4000.
-Upgraded: Angular 21.2 (`ng serve`) on http://localhost:4200.
+Upgraded: Angular 21.2 production build (`ng build`) served on http://localhost:4200.
 The same Playwright specs (`parity/specs`) run against both projects.
 
 ## Results
@@ -34,12 +34,12 @@ The same Playwright specs (`parity/specs`) run against both projects.
 | [modal-open](side-by-side/modal-open.png)               | 1280x3360 / 1280x3360      | 0.000%     |
 | [drawer-open](side-by-side/drawer-open.png)             | 1280x3360 / 1280x3360      | 0.000%     |
 
-Pixel diff = share of pixels where any RGBA channel differs by more than 30 (`compose.mjs`).
+Pixel diff = share of pixels where any RGBA channel differs by more than 30 (`compose.mjs`). `parity/global-setup.ts` clears old screenshots at the start of each run.
 
 ## Known baseline behavior kept
 
 - The page logs `Translation key 'alert.warning' does not resolve to a string.` (a `<ds-alert variation="warning">` in the drawer; the
-  web component expects `warn`). It is present in both apps and allow-listed by exact text in `page.parity.ts`; any other console error fails.
+  web component expects `warn`). It is present in both apps and allow-listed by exact text in `page.parity.ts`; any other uncaught error or `console.error` fails.
 
 ## Reproduce
 
@@ -47,13 +47,13 @@ Pixel diff = share of pixels where any RGBA channel differs by more than 30 (`co
 # from the repo root
 npm ci && npm run build:tokens && npm run build:core
 
-# baseline (Angular 19) on :4000, from a worktree of main
-git worktree add ../baseline origin/main
+# baseline (Angular 19) on :4000, from a worktree of the commit that added this suite on Angular 19
+git worktree add ../baseline 0b7392cc
 (cd ../baseline && npm ci && npm run build:tokens && npm run build:core \
   && cd examples/angular && npx ng build && npx http-server dist/demo/browser -p 4000 -s)
 
-# upgraded (Angular 21) on :4200
-cd examples/angular && npm start
+# upgraded (Angular 21, Node ^20.19 || ^22.12 || >=24) production build on :4200
+cd examples/angular && npx ng build && npx http-server dist/demo/browser -p 4200 -s
 
 # suite + side-by-side report
 cd examples/angular

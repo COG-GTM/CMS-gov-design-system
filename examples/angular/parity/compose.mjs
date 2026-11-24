@@ -38,11 +38,12 @@ for (const name of fs
   const [ra, rb] = await Promise.all([load(a, width, height), load(b, width, height)]);
   let changed = 0;
   for (let i = 0; i < ra.length; i += 4) {
-    if (
-      Math.abs(ra[i] - rb[i]) + Math.abs(ra[i + 1] - rb[i + 1]) + Math.abs(ra[i + 2] - rb[i + 2]) >
-      30
-    )
-      changed++;
+    for (let c = 0; c < 4; c++) {
+      if (Math.abs(ra[i + c] - rb[i + c]) > 30) {
+        changed++;
+        break;
+      }
+    }
   }
   const diff = ((changed / (width * height)) * 100).toFixed(3);
   const gap = 24;

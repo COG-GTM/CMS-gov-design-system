@@ -9,6 +9,7 @@ export default defineConfig({
   // Not *.spec.ts so the root Jest unit run (npm run test:unit) does not pick these up.
   testMatch: '**/*.parity.ts',
   outputDir: './test-results',
+  globalSetup: './global-setup.ts',
   fullyParallel: true,
   retries: 0,
   reporter: [['list'], ['json', { outputFile: './report/results.json' }]],
